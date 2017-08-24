@@ -66,7 +66,7 @@ $ kubectl --kubeconfig=$CLUSTER.kubeconfig get po
 ```
 
 > Error in configuration:
-> unable to read client-cert /Users/my-username/~/k8/my-cluster.com/my-username.crt for my-username due to open /Users/my-username/~/k8/my-cluster.com/my-username.crt: no such file or directory
+> unable to read client-cert /Users/my-username/\~/k8/my-cluster.com/my-username.crt for my-username due to open /Users/my-username/\~/k8/my-cluster.com/my-username.crt: no such file or directory
 
 ### Connect to a kubernetes cluster
 
@@ -195,7 +195,7 @@ spec:
 
 Next you need to go into the AWS console and use Route53 to point the domain at the new load balancer.
 
-## Finding you ingress (ingestion) points
+## Finding your ingress (ingestion) points
 
 List all the ingress points in short form:
 
@@ -208,3 +208,5 @@ Examine a particular ingress in detail:
 ```
 kubectl --kubeconfig=$CLUSTER.kubeconfig describe ingress myapp-ingress
 ```
+
+`get` and `describe` are interchangeable, one just shows more detail.
