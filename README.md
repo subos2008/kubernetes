@@ -109,7 +109,6 @@ kubectl --kubeconfig=$CLUSTER.kubeconfig config use-context $CLUSTER
 
 ```
 kubectl --kubeconfig=$CLUSTER.kubeconfig ...
-
 ```
 
 ## Inspecting a Cluster
@@ -139,6 +138,8 @@ If you use "Kind: Ingress" you can then go in and point Route53 at the created E
 
 The Ingress:
 
+Note you need to replace the host with your own.
+
 ```yaml
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -146,7 +147,7 @@ metadata:
   name: myapp-ingress
 spec:
   rules:
-  - host: myapp.k8s.dev.my-domain.com
+  - host: myapp.mydomain.com
     http:
       paths:
       - path: /
@@ -161,33 +162,33 @@ The service. This acts like a little load balancer and routes to whatever Deploy
 apiVersion: v1
 kind: Service
 metadata:
-  name: myapp-ingestion
+  name: myapp-http-ingestion
 spec:
   selector:
-    app: myapp-ingestion
+    app: myapp-http-ingestion
   sessionAffinity: None
   ports:
   - port: 80
     targetPort: 3000
 ```
 
-The Deployment (your code)
+The Deployment (your code). Note you need to replace the docker image with yours and have the correct port number.
 
 ```yaml
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: myapp-ingestion
+  name: myapp-http-ingestion
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: myapp-ingestion
+        app: myapp-http-ingestion
     spec:
       containers:
       - name: myapp-http-ingestion
-        image: docker.my-domain.com/myapp-http-ingestion:20170814-114105-a7df29e.12
+        image: docker-local.foo.com/myapp-http-ingestion:20170814-114105-a7df29e.12
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
