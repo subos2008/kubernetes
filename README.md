@@ -194,9 +194,15 @@ spec:
         - containerPort: 3000
 ```
 
+Deploy these to kubernetes:
+
+```bash
+kubectl --kubeconfig=$CLUSTER.kubeconfig update k8-deployment.yaml
+```
+
 Next you need to go into the AWS console and use Route53 to point the domain at the new load balancer.
 
-## Finding your ingress (ingestion) points
+## List your ingress (ingestion) points
 
 List all the ingress points in short form:
 
@@ -211,3 +217,11 @@ kubectl --kubeconfig=$CLUSTER.kubeconfig describe ingress myapp-ingress
 ```
 
 `get` and `describe` are interchangeable, one just shows more detail.
+
+## SSH into a running kubernetes container
+
+```
+$ kubectl --kubeconfig=$CLUSTER.kubeconfig get pods
+myapp-1490668047-w0mqf   1/1       Running   0          37m
+$ kubectl --kubeconfig=$CLUSTER.kubeconfig exec -it myapp-1490668047-w0mqf -- /bin/bash
+```
